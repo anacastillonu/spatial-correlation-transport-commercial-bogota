@@ -34,9 +34,6 @@ import matplotlib
 #-----------------------------------------------------------
 #LOAD DATA
 #------------------------------------------------------------
-os.chdir('C:\\Users\\anacastillo\\Desktop\\Tesis\\Modelos y Datos\\400m\\scripts')
-
-
 localidades = ['ANTONIO NARIÑO','TUNJUELITO','RAFAEL URIBE URIBE','CANDELARIA','BARRIOS UNIDOS','TEUSAQUILLO','PUENTE ARANDA','LOS MARTIRES','USAQUEN','CHAPINERO','SANTA FE','SAN CRISTOBAL','USME','CIUDAD BOLIVAR','BOSA','KENNEDY','FONTIBON','ENGATIVA','SUBA']
 
 transporte = ['Transmilenio', 'SITP', 'P.Vehiches',
@@ -49,7 +46,7 @@ comercial = ['Wholesale', 'Used Goods', 'Retail', 'Restaurants, Cafés and Bars'
 
 
 
-data = pd.read_csv('grid_data.csv')
+data = pd.read_csv('data\\grid_data.csv')
 data['co'] = data.apply(lambda x: int(str(x['fico_id'])[(str(x['fico_id']).find('_')+1):]), axis=1)
 data['fi'] = data.apply(lambda x: int(str(x['fico_id'])[:(str(x['fico_id']).find('_'))])*(-1), axis=1)
 
@@ -69,23 +66,23 @@ for value in range(0,11):
 #______________________
 #SHAPEFILES
 
-loc_shp = gpd.read_file('loc_mod.shp')
+loc_shp = gpd.read_file('data\\loc_mod.shp')
 loc_json = json.loads(loc_shp.set_index('LocNombre').to_json())
 
-loc_corrs = pd.read_csv('corr_localidades.csv', encoding = 'latin1')
+loc_corrs = pd.read_csv('data\\corr_localidades.csv', encoding = 'latin1')
 
 
 #_________________________________________
 # GRID SHAPE
-grid = gpd.read_file('bogogrid_blank.shp')
+grid = gpd.read_file('data\\bogogrid_blank.shp')
 grid.set_index('fico_id',inplace=True)
 grid.columns = ['upz', 'Localidad', 'geometry']
 
 centroides_localidades = pd.read_csv('centroides_localidades.csv')
 
 #________________________________________
-all_hot = gpd.read_file('all_hot.shp')
-all_kde = gpd.read_file('kde.shp').set_crs(epsg=3116).to_crs(epsg=4326)
+all_hot = gpd.read_file('data\\all_hot.shp')
+all_kde = gpd.read_file('data\\kde.shp').set_crs(epsg=3116).to_crs(epsg=4326)
 
 #--------------------------------------------------------------
     # DASH APP
@@ -869,4 +866,4 @@ def update_hot(n_clicks, comm, transp,area):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True) 
+    app.run_server(debug=True)
