@@ -6,7 +6,7 @@ Created on Sat Jun 27 17:33:06 2020
 
 POR HACER:  All commercial in Hotspots
             Not significant combinations
-
+Test
 """
 #-----------------------------------------------------------
 # IMPORT LIBRARIES
@@ -45,8 +45,9 @@ comercial = ['Wholesale', 'Used Goods', 'Retail', 'Restaurants, Cafés and Bars'
        'Banking and Post Offices', 'Commercial Activity']
 
 
-
-data = pd.read_csv('data\\grid_data.csv')
+url = 'https://raw.githubusercontent.com/anacastillonu/spatial-correlation-transport-commercial-bogota/master/data/grid_data.csv'
+data = pd.read_csv(url,sep=",")
+#data = pd.read_csv('data\\grid_data.csv')
 data['co'] = data.apply(lambda x: int(str(x['fico_id'])[(str(x['fico_id']).find('_')+1):]), axis=1)
 data['fi'] = data.apply(lambda x: int(str(x['fico_id'])[:(str(x['fico_id']).find('_'))])*(-1), axis=1)
 
@@ -66,7 +67,8 @@ for value in range(0,11):
 #______________________
 #SHAPEFILES
 
-loc_shp = gpd.read_file('data\\loc_mod.shp')
+url = 'https://raw.githubusercontent.com/anacastillonu/spatial-correlation-transport-commercial-bogota/master/data/loc_mod.geojson'
+loc_shp = gpd.read_file(url)
 loc_json = json.loads(loc_shp.set_index('LocNombre').to_json())
 
 loc_corrs = pd.read_csv('data\\corr_localidades.csv', encoding = 'latin1')
@@ -74,15 +76,19 @@ loc_corrs = pd.read_csv('data\\corr_localidades.csv', encoding = 'latin1')
 
 #_________________________________________
 # GRID SHAPE
+'''
 grid = gpd.read_file('data\\bogogrid_blank.shp')
 grid.set_index('fico_id',inplace=True)
 grid.columns = ['upz', 'Localidad', 'geometry']
-
+'''
 centroides_localidades = pd.read_csv('centroides_localidades.csv')
 
 #________________________________________
-all_hot = gpd.read_file('data\\all_hot.shp')
-all_kde = gpd.read_file('data\\kde.shp').set_crs(epsg=3116).to_crs(epsg=4326)
+url = 'https://raw.githubusercontent.com/anacastillonu/spatial-correlation-transport-commercial-bogota/master/data/all_hot.geojson'
+all_hot = gpd.read_file(url)
+
+url = 'https://raw.githubusercontent.com/anacastillonu/spatial-correlation-transport-commercial-bogota/master/data/kde.geojson'
+all_kde = gpd.read_file(url).set_crs(epsg=3116).to_crs(epsg=4326)
 
 #--------------------------------------------------------------
     # DASH APP
