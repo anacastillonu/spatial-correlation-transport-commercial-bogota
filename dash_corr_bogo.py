@@ -71,7 +71,8 @@ url = 'https://raw.githubusercontent.com/anacastillonu/spatial-correlation-trans
 loc_shp = gpd.read_file(url)
 loc_json = json.loads(loc_shp.set_index('LocNombre').to_json())
 
-loc_corrs = pd.read_csv('data\\corr_localidades.csv', encoding = 'latin1')
+url = 'https://raw.githubusercontent.com/anacastillonu/spatial-correlation-transport-commercial-bogota/master/data/corr_localidades.csv'
+loc_corrs = pd.read_csv(url, encoding = 'latin1',sep=",")
 
 
 #_________________________________________
@@ -81,7 +82,8 @@ grid = gpd.read_file('data\\bogogrid_blank.shp')
 grid.set_index('fico_id',inplace=True)
 grid.columns = ['upz', 'Localidad', 'geometry']
 '''
-centroides_localidades = pd.read_csv('centroides_localidades.csv')
+url = 'https://raw.githubusercontent.com/anacastillonu/spatial-correlation-transport-commercial-bogota/master/data/centroides_localidades.csv'
+centroides_localidades = pd.read_csv(url, encoding = 'latin1',sep=",")
 
 #________________________________________
 url = 'https://raw.githubusercontent.com/anacastillonu/spatial-correlation-transport-commercial-bogota/master/data/all_hot.geojson'
